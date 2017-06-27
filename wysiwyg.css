@@ -1,10 +1,18 @@
 
-.blue{
-	background-color: lightblue;
+.card{
+	border: 2px solid black;
+	min-height: 500px;
+	flex-wrap: wrap;
 }
 
-.yellow{
-	background-color: yellow;
+.card img{
+	width:60%;
+	height:auto;
+	float:left;
+	padding-right: 30px;
+
 }
 
-
+.clicked{
+	border:3px dotted tomato;
+}

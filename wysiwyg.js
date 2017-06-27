@@ -4,7 +4,7 @@ let people =[
 { title:"Math Goddess",
   name: "Hypatia",
   bio: "One of the first known female mathematicians, she studied astronomy, philosophy, and mathematics first under the tutelage of her father, Theon, who was a member of the Library of Alexandria.  Later, she became a leader in the field of mathematics, co-authoring commentaries and translations of great mathematical treatises with her father.  She also began teaching students from her home, giving others the gift of her knowledge and curiosity. She attracted huge crowds of followers not only with her math-related works, but also with her lectures on the philosophy of Plato and Aristotle.  Unfortunately, her popularity led to her death at the hands of Christian zealots after she became part of a dispute between powerful political and religious figures.",
-  image: "https://media1.britannica.com/eb-media/57/19157-004-BCE43E09.jpg",
+  image: "images/hypatia.jpg",
   lifespan: {
     birth: "circa 370 CE",
     death:"circa 416 CE"
@@ -39,62 +39,81 @@ let people =[
 
 var counter = 0;
 var container = document.getElementById("container");
+
 function printToDOM(people){
+
 for (; counter < people.length; counter++) {
   // Give each person element a unique identifier
-  container.innerHTML += `<div class="person__container" id="person--${counter}">
-    <header>${people[counter].name}, ${people[counter].title}</header>
-    <section>${people[counter].image} alt=""> ${people[counter].bio}</section>
+  //appendChild
+  let personDiv = document.createElement("div");
+  personDiv.innerHTML += `<row><div class="person__container card col-md-6" id="person-${counter}" value="${counter}">
+    <header><h2>${people[counter].name}, ${people[counter].title}</h2></header>
+    <section><img src='${people[counter].image}' alt=''> ${people[counter].bio}</section>
+     <section class='userInput' id='userInput'></section>
     <footer>Life: ${people[counter].lifespan.birth} to ${people[counter].lifespan.death}  </footer>
-    </div>`;
+    </div></row>`;
 
+    container.appendChild(personDiv);
+
+    let personCard = document.getElementById(`person-${counter}`);
+    console.log ("personCard",personCard);
+    personCard.addEventListener("click", function(){
+        console.log ("card got clicked");
+        let personChoice = event.currentTarget.id;
+        removeClass();
+        document.getElementById(personChoice).classList.add("clicked");// When you click on one of the person elements, a dotted border should appear around it.
+        addFocus();
+
+    });
   }
+
 }
 
 printToDOM(people);
 
-// Now containerEl will have elements in it
+let textarea= document. getElementById("input");
+
 var personContainer = document.getElementsByClassName("person__container");
-
-Event listeners are created
-for (var i = 0; i < personContainer.length; i++) {
-  personContainer[i].addEventListener("click", function (event) {
-
-
-  });
-
-
-
-// }
-//     var personDiv = document.createElement("person");
-//     personDiv.setAttribute('id', counter);
-//     personDiv.setAttribute("class", "card");
-//     //if counter % 2 === 0, then make background color yellow?
-//     //otherwise, make it blue
-
-//     let bioName=document.createElement("header");
-//     bioName.innerHTML =`${object.name}, ${object.title} `;
-
-//     let bioPic=document.createElement("section");
-//     bioPic.innerHTML=`<img src="${object.image} alt=""> ${object.bio}`;
-
-//     let bioLife = document.createElement("footer");
-//     bioLife.innerHTML=`Life: ${object.lifespan.birth} to ${object.lifespan.death} `;
-
-//     personDiv.appendChild(bioName);
-//    personDiv.appendChild(bioPic);
-//     personDiv.appendChild(bioLife);
-//  container.appendChild(personDiv);
-// //yourElement.setAttribute("style", "background-color:red; font-size:2em;");
-// //https://www.w3schools.com/jsref/met_node_appendchild.asp
-//     counter++;
-// });
-
-// Create a DOM element for each of the objects inside the container. Style your person elements however you like.
+    personContainer[0].style.background = "lightblue";
+    personContainer[1].style.background ="yellow";
+    personContainer[2].style.background ="lightblue";
 // For every even numbered element, have a light yellow background.
 // For every odd numbered element, have a light blue background.
-// Each element's DOM structure should be as shown below.
-// When you click on one of the person elements, a dotted border should appear around it.
+
+  textarea.addEventListener("keyup", function(event){
+          if (event.key === "Enter"){
+            clearInput();
+          }else{
+            mirror();
+          }
+
+        });
+
+function getText(){
+  let textContent = textarea.value;
+  return textContent;
+}
+
+function mirror(){
+  let clickedEl= document.getElementsByClassName("clicked");
+  console.log ("clickedEl",clickedEl[0].childNodes);
+  let input = getText();
+  clickedEl[0].childNodes[5].innerHTML=`${input}`;
+
+};
+
+function addFocus(){
+  textarea.focus();
+}
 // When you click on one of the person elements, the text input should immediately gain focus so that you can start typing.
-// When there is a highlighted person element, and you begin typing in the input box, the person's biography should be immediately bound to what you are typing, letter by letter.
-// When you press the enter/return key when typing in the input field, then the content of the input field should immediately be blank.
+
+function clearInput(){
+  textarea.value ="";
+}// When you press the enter/return key when typing in the input field, then the content of the input field should immediately be blank.
+
+function removeClass(){
+  let clickedEl= document.getElementsByClassName("clicked");
+  for(var j=0; j<clickedEl.length; j++){
+   clickedEl[j].classList.remove("clicked");
+  }
+}
