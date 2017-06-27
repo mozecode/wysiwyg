@@ -53,16 +53,15 @@ for (; counter < people.length; counter++) {
     <footer>Life: ${people[counter].lifespan.birth} to ${people[counter].lifespan.death}  </footer>
     </div></row>`;
 
-    container.appendChild(personDiv);
+  container.appendChild(personDiv);
 
-    let personCard = document.getElementById(`person-${counter}`);
-    console.log ("personCard",personCard);
-    personCard.addEventListener("click", function(){
-        console.log ("card got clicked");
-        let personChoice = event.currentTarget.id;
-        removeClass();
-        document.getElementById(personChoice).classList.add("clicked");// When you click on one of the person elements, a dotted border should appear around it.
-        addFocus();
+   let personCard = document.getElementById(`person-${counter}`);
+
+   personCard.addEventListener("click", function(){
+      let personChoice = event.currentTarget.id;
+      removeClass();//clears out any previous selection by the user
+      document.getElementById(personChoice).classList.add("clicked");// When you click on one of the person elements, a dotted border should appear around it.
+      addFocus();
 
     });
   }
@@ -80,14 +79,14 @@ var personContainer = document.getElementsByClassName("person__container");
 // For every even numbered element, have a light yellow background.
 // For every odd numbered element, have a light blue background.
 
-  textarea.addEventListener("keyup", function(event){
-          if (event.key === "Enter"){
-            clearInput();
-          }else{
-            mirror();
-          }
+textarea.addEventListener("keyup", function(event){
+    if (event.key === "Enter"){
+        clearInput();
+    }else{
+        mirror();
+    }
 
-        });
+});
 
 function getText(){
   let textContent = textarea.value;
@@ -96,7 +95,7 @@ function getText(){
 
 function mirror(){
   let clickedEl= document.getElementsByClassName("clicked");
-  console.log ("clickedEl",clickedEl[0].childNodes);
+  // console.log ("clickedEl",clickedEl[0].childNodes);
   let input = getText();
   clickedEl[0].childNodes[5].innerHTML=`${input}`;
 
@@ -115,5 +114,5 @@ function removeClass(){
   let clickedEl= document.getElementsByClassName("clicked");
   for(var j=0; j<clickedEl.length; j++){
    clickedEl[j].classList.remove("clicked");
-  }
+  }//function to remove classes
 }
